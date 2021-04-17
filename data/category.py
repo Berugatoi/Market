@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Boolean
 from sqlalchemy.orm import relation
-from .db_session import Base
+from data.db_session import Base
 
 
 class CategoryTable(Base):

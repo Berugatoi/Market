@@ -1,0 +1,13 @@
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
+from .db_session import Base
+
+
+
+class Product(Base):
+    __tablename__ = 'product_table'
+    id = Column(Integer, autoincrement=True, primary_key=True)
+    name = Column(String)
+    category = Column(ForeignKey('category_table.id'))
+    sex = Column(ForeignKey('sex_table.id'))
+    price = Column(Integer)
+    size = Column(ForeignKey('shoe_size_table.id'))

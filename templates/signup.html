@@ -26,7 +26,13 @@
     <tr>
       <td>Имя:</td><td><input type="text" name="name" required></td>
     </tr>
+      <tr>
+      <td>Фамилия:</td><td><input type="text" name="surname" required></td>
+    </tr>
     <tr>
+      {% if not email_ok %}
+        <h4 class="color: red">Пользователь с таким email уже существует</h4>
+      {% endif %}
       <td>Email:</td><td><input type="email" name="email" required></td>
     </tr>
     <tr>
@@ -41,11 +47,17 @@
     <tr>
       <td>Страна:</td><td><input type="text" name="country" required></td>
     </tr>
+      <tr>
+      <td>День рождения:</td><td><input type="date" name="birthday" required></td>
+    </tr>
+      {% if not password_ok %}
+        <h3 style="color: red">Пароли не совпадают</h3>
+      {% endif %}
     <tr>
       <td>Пароль:</td><td><input type="password" name="password" required></td>
     </tr>
     <tr>
-      <td>Повторите пароль:</td><td><input type="password" name="cnfrm_psswd" required></td>
+      <td>Повторите пароль:</td><td><input type="password" name="confirm_password" required></td>
     </tr>
     </table>
     <p><input type="submit" value="Подтвердить" style="display:block; margin-left:auto; margin-right:auto; margin-top:1vw;"></p>

@@ -22,15 +22,15 @@ def signup():
     if request.method == 'POST':
         print(request.form['password'], request.form['confirm_password'])
         if request.form['password'] != request.form['confirm_password']:
-            return render_template('signup.html', password_ok=False)
+            return render_template('signup.html', password_ok=False, email_ok=True)
         required_data = ['name', 'surname', 'email', 'birthday', 'password']
         data = {k: v for k, v in request.form.items() if k in required_data}
         users = get('http://127.0.0.1:5000/api/user').json()['users']
         if any(i['email'] == data['email'] for i in users):
-            return render_template('signup.html', email_ok=False)
+            return render_template('signup.html', email_ok=False, password_ok=True)
         res = post('http://127.0.0.1:5000/api/user', data=data)
         return redirect('/login')
-    return render_template('signup.html')
+    return render_template('signup.html', email_ok=True, password_ok=True)
 
 
 @app.route('/login')

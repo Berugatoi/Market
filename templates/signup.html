@@ -1,0 +1,55 @@
+<html>
+<head>
+  <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}">
+  <link href="https://fonts.googleapis.com/css?family=Acme|K2D" rel="stylesheet">
+  <link rel='icon' href="{{url_for('static', filename='logo.png')}}">
+</head>
+<body>
+  <div class="sticky">
+    <h1>IbraShop</h1>
+  </div>
+  <div class="nav">
+    <p><a href="/">Домой</a> > <a href="">Создать аккаунт</a></p>
+  </div>
+  {% if not ok %}
+    <p>Введите другую эл. почту</p>
+  {% endif %}
+  <form action="" method="POST" onsubmit="return checkEqual()">
+    <h2>Создать новый аккаунт:</h2>
+    <table>
+    <tr>
+      <td>ТИП АККАУНТА: </td>
+      <td>
+        <input type="radio" value="Customer" name="type" checked>Клиент &nbsp &nbsp <input type="radio" value="Seller" name="type">Продавец
+      </td>
+    </tr>
+    <tr>
+      <td>Имя:</td><td><input type="text" name="name" required></td>
+    </tr>
+    <tr>
+      <td>Email:</td><td><input type="email" name="email" required></td>
+    </tr>
+    <tr>
+      <td>Телефон:</td><td><input type="tel" name="phone" required></td>
+    </tr>
+    <tr>
+      <td><b>Адрес:</b></td>
+    </tr>
+    <tr>
+      <td>Город:</td><td><input type="text" name="city" required></td>
+    </tr>
+    <tr>
+      <td>Страна:</td><td><input type="text" name="country" required></td>
+    </tr>
+    <tr>
+      <td>Пароль:</td><td><input type="password" name="password" required></td>
+    </tr>
+    <tr>
+      <td>Повторите пароль:</td><td><input type="password" name="cnfrm_psswd" required></td>
+    </tr>
+    </table>
+    <p><input type="submit" value="Подтвердить" style="display:block; margin-left:auto; margin-right:auto; margin-top:1vw;"></p>
+    <script type="text/javascript" src="{{url_for('static', filename='main.js')}}"></script>
+  </form>
+</body>
+</html>

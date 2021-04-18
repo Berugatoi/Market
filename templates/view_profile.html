@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}">
+        <link href="https://fonts.googleapis.com/css?family=Acme|K2D" rel="stylesheet">
+        <link rel='icon' href="{{url_for('static', filename='logo.png')}}">
+      </head>
+<body>
+    <div class="sticky">
+        <h1>IbraShop</h1>
+    </div>
+  <div class="nav">
+    <p><a href="/">Домой</a> > <a href="/viewprofile/">Посмотреть профиль</a> > <a href="">Профиль пользователя</a></p>
+  </div>
+  <h2>Профиль пользователя</h2>
+  {{type}} Account
+  <table>
+    <tr>
+      <td>Имя:</td><td>{{name}}</td>
+    </tr>
+    <tr>
+      <td>Email:</td><td>{{email}}</td>
+    </tr>
+    <tr>
+      <td>Телефон:</td><td>{{phone}}</td>
+    </tr>
+    {% if type=="Seller" %}
+    <tr>
+      <td>DEALS IN :</td>
+      <td>{% for i in category %}
+        {{i}},
+      {% endfor %}</td>
+    </tr>
+    {% endif %}
+    <tr>
+      <td>Адрес:</td><td>{{city}}, {{country}}</td>
+    </tr>
+  </table>
+  {% if my %}
+  <p class="press"><a href="/editprofile/">Редактировать профиль</a></p>
+  {% endif %}
+  {% if not my and type!="Customer" %}
+  <p class="press"><a href="./sellerproducts">Посмотреть товар</a></p>
+  {% endif %}
+</body>
+</html>

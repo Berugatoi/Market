@@ -1,9 +1,9 @@
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 from .db_session import Base
+from sqlalchemy_serializer import SerializerMixin
 
 
-
-class Product(Base):
+class Product(Base, SerializerMixin):
     __tablename__ = 'product_table'
     id = Column(Integer, autoincrement=True, primary_key=True)
     name = Column(String)

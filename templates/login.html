@@ -1,0 +1,30 @@
+<html>
+<head>
+  <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}">
+  <link href="https://fonts.googleapis.com/css?family=Acme|K2D" rel="stylesheet">
+  <link rel='icon' href="{{url_for('static', filename='logo.png')}}">
+</head>
+<body>
+  <div class="sticky">
+    <h1>IbraShop</h1>
+  </div>
+  <div class="nav">
+    <p><a href="/">Домой</a> > <a href="">Войти</a></p>
+  </div>
+  <h2>Войти</h2>
+  {% if err %}
+    <p>Неправильный пароль или email</p>
+  {% endif %}
+  <form action="" method="POST">
+    <input type="radio" value="Customer" name="type" checked>Клиент &nbsp &nbsp<input type="radio" value="Seller" name="type">Продавец
+    <table>
+      <tr>
+        <td>Email:</td><td><input type="email" name="email" required></td>
+      </tr><tr>
+        <td>Пароль:</td><td><input type="password" name="password" required></td>
+      </tr>
+    </table>
+    <input type="submit" value="Подтвердить" style="display:block; margin-left:auto; margin-right:auto; margin-top:1vw;">
+  </form>
+</body>
+</html>

@@ -3,3 +3,4 @@ from .product import Product
 from .shoe_size_table import ShoeSizeTable
 from .clothing_size_table import ClothingSizeTable
 from .category import CategoryTable
+from .user_table import UserTable

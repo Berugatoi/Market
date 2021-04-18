@@ -1,8 +1,10 @@
 from flask import Flask, render_template
 from data.db_session import create_session, global_init
 from init_functions import *
+from flask_restful import Api
 
 app = Flask(__name__)
+api = Api(app)
 
 @app.route('/')
 def home():

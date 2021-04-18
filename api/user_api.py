@@ -3,6 +3,7 @@ from data import db_session as db_sess
 from data.user_table import UserTable
 from flask import jsonify, make_response
 from api.parser import user_parser
+from datetime import datetime
 
 
 def abort_if_news_not_found(user_id):
@@ -33,7 +34,9 @@ class UserResource(Resource):
     def delete(self, user_id):
         abort_if_news_not_found(user_id)
         sess = db_sess.create_session()
-        sess.query(UserTable).get(user_id).delete()
+        user = sess.query(UserTable).filter(UserTable.id == user_id).first()
+        print(user)
+        sess.delete(user)
         sess.commit()
         return jsonify({'success': "ok"})
 
@@ -47,7 +50,23 @@ class UserListResource(Resource):
         return jsonify({'users': [item.to_dict() for item in users]})
 
     def post(self):
+        print('aoskdo[as')
         sess = db_sess.create_session()
         args = user_parser.parse_args()
-        user = UserTable(**args)
+        required_data = ['name', 'surname', 'password',
+                         'birthday', 'email']
+        if not args:
+            return make_response(jsonify(error="Empty request"), 400)
+        if not any([i in required_data for i in args]):
+            return make_response(jsonify(error="Bad request"), 400)
+        user = UserTable(
+            name=args['name'],
+            surname=args['surname'],
+            birthday=datetime.strptime(args['birthday'], "%Y-%m-%d"),
+            email=args['email']
+        )
+        print(args.get('password'))
+        user.set_password(args['password'])
+        sess.add(user)
+        sess.commit()
         return jsonify({'success': "ok"})

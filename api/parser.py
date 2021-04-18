@@ -7,6 +7,7 @@ user_parser.add_argument("name", required=False)
 user_parser.add_argument("surname", required=False)
 user_parser.add_argument('email', required=False)
 user_parser.add_argument('password', required=False)
+user_parser.add_argument('birthday', required=False)
 
 
 

@@ -10,5 +10,8 @@ user_parser.add_argument('password', required=False)
 user_parser.add_argument('birthday', required=False)
 
 
-
-
+product_parser = reqparse.RequestParser()
+product_parser.add_argument('name', required=False)
+product_parser.add_argument('sex', required=False)
+product_parser.add_argument('category', required=False)
+product_parser.add_argument('price', required=False)

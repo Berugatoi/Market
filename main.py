@@ -70,7 +70,10 @@ def login():
 @app.route('/viewprofile')
 @login_required
 def viewprofile():
-    return render_template('view_profile.html')
+    sess = create_session()
+    if not current_user.is_authenticated:
+        return make_response(jsonify({'error': 'Not found'}), 404)
+    return render_template('view_profile.html', user=current_user)
 
 
 @app.route('/editprofile')

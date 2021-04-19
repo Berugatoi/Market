@@ -20,7 +20,7 @@
   {% if current_user.is_authenticated %}
     <p><br/>Вы вошли как {{name}} -> {{type}}</p>
     <div class="centerthis">
-    <p class="press"><a href="/viewprofile/">Посмотреть профиль</a></p>
+    <p class="press"><a href="/viewprofile">Посмотреть профиль</a></p>
     <p class="press"><a href="/editprofile">Редактировать</a></p>
     {% if type=="Customer" %}
       <p class="press"><a href="/buy">Купить</a></p>

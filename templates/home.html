@@ -18,7 +18,7 @@
   </ul>
 
   {% if current_user.is_authenticated %}
-    <p><br/>Вы вошли как {{name}} -> {{type}}</p>
+    <p><br/>{{current_user.name}}</p>
     <div class="centerthis">
     <p class="press"><a href="/viewprofile">Посмотреть профиль</a></p>
     <p class="press"><a href="/editprofile">Редактировать</a></p>

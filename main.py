@@ -6,12 +6,16 @@ from api.user_api import UserResource, UserListResource
 from requests import get, post
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from data.user_table import UserTable
+from api.product_api import ProductResource, ProductListResource
+
 
 
 app = Flask(__name__)
 api = Api(app)
 api.add_resource(UserResource, "/api/user/<user_id>")
 api.add_resource(UserListResource, '/api/user')
+api.add_resource(ProductResource, '/api/product/<int:product_id>')
+api.add_resource(ProductListResource, '/api/product')
 app.secret_key = 'Market_site'
 login_manager = LoginManager()
 login_manager.init_app(app)

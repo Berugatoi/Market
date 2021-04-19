@@ -57,7 +57,7 @@ class UserListResource(Resource):
                          'birthday', 'email']
         if not args:
             return make_response(jsonify(error="Empty request"), 400)
-        if not any([i in required_data for i in args]):
+        if not all([i in args.keys() for i in required_data]):
             return make_response(jsonify(error="Bad request"), 400)
         user = UserTable(
             name=args['name'],

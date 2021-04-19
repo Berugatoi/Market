@@ -54,7 +54,7 @@ class ProductListResource(Resource):
         required_data = ['name', 'sex', 'category', 'size', 'price']
         if not args:
             return make_response(jsonify(error='Empty request'), 400)
-        if not any([i in required_data for i in args.keys()]):
+        if not all([i in args.keys() for i in required_data]):
             return make_response(jsonify(error='Bad request'), 400)
         product = Product()
         product.name = args['name']

@@ -14,6 +14,8 @@ class UserTable(Base, SerializerMixin, UserMixin):
     birthday = Column(Date)
     created_date = Column(Date, default=date.today())
     hashed_password = Column(String)
+    phone_number = Column(String)
+    address = Column(String)
     email = Column(String)
 
     def set_password(self, password):

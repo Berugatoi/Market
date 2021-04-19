@@ -10,13 +10,14 @@
   <ul class="headbar">
     <li><a href="/">Домой</a></li>
     <li><a href="/signup">Новый аккаунт</a></li>
-    {% if signedin %}
+    {% if current_user.is_authenticated %}
       <li><a href="/logout">Выйти</a></li>
     {% else %}
       <li><a href="/login">Войти</a></li>
     {% endif %}
   </ul>
-  {% if signedin %}
+
+  {% if current_user.is_authenticated %}
     <p><br/>Вы вошли как {{name}} -> {{type}}</p>
     <div class="centerthis">
     <p class="press"><a href="/viewprofile/">Посмотреть профиль</a></p>

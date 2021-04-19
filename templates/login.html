@@ -12,8 +12,10 @@
     <p><a href="/">Домой</a> > <a href="">Войти</a></p>
   </div>
   <h2>Войти</h2>
-  {% if err %}
-    <p>Неправильный пароль или email</p>
+  {% if error == 1%}
+    <h2>Пользователя с таким email не существует</h2>
+  {% elif error == 2 %}
+    <h2>Неправильный пароль</h2>
   {% endif %}
   <form action="" method="POST">
     <input type="radio" value="Customer" name="type" checked>Клиент &nbsp &nbsp<input type="radio" value="Seller" name="type">Продавец

@@ -4,12 +4,17 @@ from init_functions import *
 from flask_restful import Api
 from api.user_api import UserResource, UserListResource
 from requests import get, post
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from data.user_table import UserTable
 
 
 app = Flask(__name__)
 api = Api(app)
 api.add_resource(UserResource, "/api/user/<user_id>")
 api.add_resource(UserListResource, '/api/user')
+app.secret_key = 'Market_site'
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 
 @app.route('/')
@@ -20,7 +25,6 @@ def home():
 @app.route('/signup', methods=['POST', 'GET'])
 def signup():
     if request.method == 'POST':
-        print(request.form['password'], request.form['confirm_password'])
         if request.form['password'] != request.form['confirm_password']:
             return render_template('signup.html', password_ok=False, email_ok=True)
         required_data = ['name', 'surname', 'email', 'birthday', 'password']
@@ -33,17 +37,44 @@ def signup():
     return render_template('signup.html', email_ok=True, password_ok=True)
 
 
-@app.route('/login')
+@login_manager.user_loader
+def load_user(user):
+    sess = create_session()
+    user = sess.query(UserTable).filter(UserTable.id == user).first()
+    return user
+
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect('/')
+
+
+@app.route('/login', methods=['POST', 'GET'])
 def login():
+    if request.method == "POST":
+        email = request.form['email']
+        password = request.form['password']
+        sess = create_session()
+        user = sess.query(UserTable).filter(UserTable.email == email).first()
+        if not user:
+            return render_template('login.html', error=1)
+        if not user.check_password(password):
+            return render_template('login.html', error=2)
+        login_user(user, remember=True)
+        return redirect('/')
     return render_template('login.html')
 
 
+
 @app.route('/viewprofile')
+@login_required
 def viewprofile():
     return render_template('view_profile.html')
 
 
 @app.route('/editprofile')
+@login_required
 def editprofile():
     return render_template('login.html')
 

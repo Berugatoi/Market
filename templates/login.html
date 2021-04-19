@@ -1,11 +1,11 @@
-<html>
-<head>
-  <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}">
-  <link href="https://fonts.googleapis.com/css?family=Acme|K2D" rel="stylesheet">
-  <link rel='icon' href="{{url_for('static', filename='logo.png')}}">
-</head>
-<body>
-  <div class="sticky">
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Войти</title>
+{% endblock %}
+
+{% block body %}
+<div class="sticky">
     <h1>IbraShop</h1>
   </div>
   <div class="nav">
@@ -28,5 +28,4 @@
     </table>
     <input type="submit" value="Подтвердить" style="display:block; margin-left:auto; margin-right:auto; margin-top:1vw;">
   </form>
-</body>
-</html>
+{% endblock %}

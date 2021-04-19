@@ -1,11 +1,11 @@
-<html>
-<head>
-  <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}">
-  <link href="https://fonts.googleapis.com/css?family=Acme|K2D" rel="stylesheet">
-  <link rel='icon' href="{{url_for('static', filename='logo.png')}}">
-</head>
-<body>
-  <div class="sticky">
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Профиль</title>
+{% endblock %}
+
+{% block body %}
+<div class="sticky">
     <h1>IbraShop</h1>
   </div>
   <div class="nav">
@@ -31,8 +31,7 @@
       <td>Страна:</td><td><input type="text" name="country" value="{{country}}" class="place"></td>
     </tr>
   </table>
-  <input type="submit" value="Save Changes" style="display:block; margin-left:auto; margin-right:auto; margin-top:1vw;">
+  <input type="submit" value="Сохранить изменения" style="display:block; margin-left:auto; margin-right:auto; margin-top:1vw;">
 </form>
 <script type="text/javascript" src="{{url_for('static', filename='main.js')}}"></script>
-</body>
-</html>
+{% endblock %}

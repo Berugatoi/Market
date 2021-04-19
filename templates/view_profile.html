@@ -1,11 +1,11 @@
-<html>
-    <head>
-        <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}">
-        <link href="https://fonts.googleapis.com/css?family=Acme|K2D" rel="stylesheet">
-        <link rel='icon' href="{{url_for('static', filename='logo.png')}}">
-      </head>
-<body>
-    <div class="sticky">
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Профиль</title>
+{% endblock %}
+
+{% block body %}
+<div class="sticky">
         <h1>IbraShop</h1>
     </div>
   <div class="nav">
@@ -41,5 +41,4 @@
   {% if not my and type!="Customer" %}
   <p class="press"><a href="./sellerproducts">Посмотреть товар</a></p>
   {% endif %}
-</body>
-</html>
+{% endblock %}

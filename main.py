@@ -1,5 +1,5 @@
 from flask import Flask, render_template, jsonify, make_response, request, redirect
-from data.db_session import create_session, global_init
+from data import db_session as db_sess
 from init_functions import *
 from flask_restful import Api
 from api.user_api import UserResource, UserListResource
@@ -21,6 +21,21 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 
+@app.route('/changepassword', methods=['POST', 'GET'])
+def change_password():
+    sess = db_sess.create_session()
+    if request.method == 'POST':
+        password = request.form['password']
+        password_again = request.form['password_again']
+        if password_again != password:
+            return render_template('change_password.html', error="Пароли не совпадают")
+        current_user.set_password(password)
+        sess.merge(current_user)
+        sess.commit()
+        return redirect('/')
+    return render_template('change_password.html')
+
+
 @app.route('/')
 def home():
     return render_template('home.html')
@@ -31,19 +46,21 @@ def signup():
     if request.method == 'POST':
         if request.form['password'] != request.form['confirm_password']:
             return render_template('signup.html', password_ok=False, email_ok=True)
-        required_data = ['name', 'surname', 'email', 'birthday', 'password']
+        required_data = ['name', 'surname', 'email', 'birthday', 'password', 'address', 'phone_number']
         data = {k: v for k, v in request.form.items() if k in required_data}
-        users = get('http://127.0.0.1:5000/api/user').json()['users']
-        if any(i['email'] == data['email'] for i in users):
-            return render_template('signup.html', email_ok=False, password_ok=True)
+        users = get('http://127.0.0.1:5000/api/user').json()
+        if users.get('users', False):
+            if any(i['email'] == data['email'] for i in users['users']):
+                return render_template('signup.html', email_ok=False, password_ok=True)
         res = post('http://127.0.0.1:5000/api/user', data=data)
         return redirect('/login')
+
     return render_template('signup.html', email_ok=True, password_ok=True)
 
 
 @login_manager.user_loader
 def load_user(user):
-    sess = create_session()
+    sess = db_sess.create_session()
     user = sess.query(UserTable).filter(UserTable.id == user).first()
     return user
 
@@ -59,7 +76,7 @@ def login():
     if request.method == "POST":
         email = request.form['email']
         password = request.form['password']
-        sess = create_session()
+        sess = db_sess.create_session()
         user = sess.query(UserTable).filter(UserTable.email == email).first()
         if not user:
             return render_template('login.html', error=1)
@@ -74,7 +91,7 @@ def login():
 @app.route('/viewprofile')
 @login_required
 def viewprofile():
-    sess = create_session()
+    sess = db_sess.create_session()
     if not current_user.is_authenticated:
         return make_response(jsonify({'error': 'Not found'}), 404)
     return render_template('view_profile.html', user=current_user)
@@ -83,7 +100,7 @@ def viewprofile():
 @app.route('/editprofile')
 @login_required
 def editprofile():
-    return render_template('login.html')
+    return render_template('edit_profile.html')
 
 
 @app.errorhandler(404)
@@ -92,7 +109,7 @@ def not_found(error):
 
 
 if __name__ == '__main__':
-    global_init('store.db')
+    db_sess.global_init('store.db')
     create_base_categories()
     create_base_sex()
     create_base_shoe_size()

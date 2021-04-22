@@ -8,6 +8,8 @@ user_parser.add_argument("surname", required=False)
 user_parser.add_argument('email', required=False)
 user_parser.add_argument('password', required=False)
 user_parser.add_argument('birthday', required=False)
+user_parser.add_argument('address', required=False)
+user_parser.add_argument('phone_number', required=False)
 
 
 product_parser = reqparse.RequestParser()

@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Boolean
 from sqlalchemy.orm import relation
-from data.db_session import Base
+from .db_session import Base
 from sqlalchemy_serializer import SerializerMixin
 
 

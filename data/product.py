@@ -11,3 +11,5 @@ class Product(Base, SerializerMixin):
     sex = Column(ForeignKey('sex_table.id'))
     price = Column(Integer)
     size = Column(ForeignKey('shoe_size_table.id'))
+    amount = Column(Integer)
+

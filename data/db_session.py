@@ -12,7 +12,7 @@ def global_init(db_name):
         return 'Имя пустое'
     if __factory:
         return
-    conn_str = f"sqlite:///db/{db_name}"
+    conn_str = f"sqlite:///db/{db_name}?check_same_thread=False"
     engine = create_engine(conn_str)
     __factory = sessionmaker(bind=engine)
     from . import __all_models

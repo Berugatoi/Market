@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, Date
+from sqlalchemy import Column, Integer, String, Boolean, Date, Text
 from .db_session import Base
 from sqlalchemy_serializer import SerializerMixin
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -15,7 +15,7 @@ class UserTable(Base, SerializerMixin, UserMixin):
     created_date = Column(Date, default=date.today())
     hashed_password = Column(String)
     phone_number = Column(String)
-    address = Column(String)
+    address = Column(Text)
     email = Column(String)
 
     def set_password(self, password):

@@ -54,7 +54,8 @@ class UserListResource(Resource):
         sess = db_sess.create_session()
         args = user_parser.parse_args()
         required_data = ['name', 'surname', 'password',
-                         'birthday', 'email']
+                         'birthday', 'email', 'address',
+                         'phone_number']
         if not args:
             return make_response(jsonify(error="Empty request"), 400)
         if not all([i in args.keys() for i in required_data]):
@@ -63,7 +64,9 @@ class UserListResource(Resource):
             name=args['name'],
             surname=args['surname'],
             birthday=datetime.strptime(args['birthday'], "%Y-%m-%d"),
-            email=args['email']
+            email=args['email'],
+            address=args['address'],
+            phone_number=args['phone_number']
         )
         print(args.get('password'))
         user.set_password(args['password'])

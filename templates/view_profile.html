@@ -11,28 +11,19 @@
   <div class="nav">
     <p><a href="/">Домой</a> > <a href="/viewprofile">Посмотреть профиль</a> > <a href="">Профиль пользователя</a></p>
   </div>
-  <h2>Профиль пользователя</h2>
-  {{type}} Account
+  <h2>Профиль пользователя {{current_user.name}}</h2>
   <table>
     <tr>
-      <td>Имя:</td><td>{{user.name}}</td>
+      <td>Имя:</td><td>{{current_user.name}}</td>
     </tr>
     <tr>
-      <td>Email:</td><td>{{user.email}}</td>
+      <td>Email:</td><td>{{current_user.email}}</td>
     </tr>
     <tr>
-      <td>Телефон:</td><td>{{phone}}</td>
+      <td>Телефон:</td><td>{{current_user.phone_number}}</td>
     </tr>
-    {% if type=="Seller" %}
     <tr>
-      <td>DEALS IN :</td>
-      <td>{% for i in category %}
-        {{i}},
-      {% endfor %}</td>
-    </tr>
-    {% endif %}
-    <tr>
-      <td>Адрес:</td><td>{{city}}, {{country}}</td>
+      <td>Адрес:</td><td>{{current_user.address}}</td>
     </tr>
   </table>
   {% if my %}

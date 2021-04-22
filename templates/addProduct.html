@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block body %}
+<form method="post" enctype="multipart/form-data">
+    {{form.hidden_tag()}}
+    {% for i in form if i.name != "csrf_token"%}
+        <p>{{i.name}}</br>{{i}}</p>
+        {% for error in i.errors %}
+            <div>{{error}}</div>
+        {% endfor %}
+    {% endfor %}
+</form>
+{% endblock %}

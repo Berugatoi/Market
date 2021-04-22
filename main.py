@@ -7,6 +7,10 @@ from requests import get, post
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from data.user_table import UserTable
 from api.product_api import ProductResource, ProductListResource
+from uuid import uuid5, NAMESPACE_OID
+from forms.ProductAddForm import ProductAddForm
+from werkzeug.utils import secure_filename
+from data.product import Product
 
 
 
@@ -19,6 +23,34 @@ api.add_resource(ProductListResource, '/api/product')
 app.secret_key = 'Market_site'
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+
+@app.route("/addPhoto", methods=['POST', 'GET'])
+def addPhoto():
+    form = ProductAddForm()
+    if form.validate_on_submit():
+        f = form.photo.data
+        image = f.read()
+        filename = secure_filename(f.filename)
+        dst_name = str(uuid5(NAMESPACE_OID, str(image)))
+        ext = filename.split('.')[-1].lower()
+        name = dst_name + "." + ext
+        with open(f'images/{name}', "wb") as m:
+            m.write(image)
+        prod = Product(
+            name=form.name.data,
+            category=form.category.data,
+            sex=form.sex.data,
+            price=form.price.data,
+            size=form.size.data,
+            amount=form.amount.data,
+            photo=name
+        )
+        sess = db_sess.create_session()
+        sess.add(prod)
+        sess.commit()
+        return redirect('/')
+    return render_template("addProduct.html", form=form)
 
 
 @app.route('/changepassword', methods=['POST', 'GET'])

@@ -12,4 +12,5 @@ class Product(Base, SerializerMixin):
     price = Column(Integer)
     size = Column(ForeignKey('shoe_size_table.id'))
     amount = Column(Integer)
+    photo = Column(String)
 

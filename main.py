@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, make_response, request, redirect
+from flask import Flask, render_template, jsonify, make_response, request, redirect, url_for
 from data import db_session as db_sess
 from init_functions import *
 from flask_restful import Api
@@ -15,11 +15,20 @@ from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 
 
+class MarketView(ModelView):
+
+    def is_accessible(self):
+        return current_user.is_authenticated
+
+    def unaccessible_callback(self, name, **kwargs):
+        return redirect('/login')
+
 
 app = Flask(__name__)
 admin = Admin(app, name="market", template_mode='bootstrap3')
-admin.add_view(ModelView(UserTable, db_sess.create_session()))
-admin.add_view(ModelView(Product, db_sess.create_session()))
+admin.add_view(MarketView(UserTable, db_sess.create_session()))
+admin.add_view(MarketView(Product, db_sess.create_session()))
+
 api = Api(app)
 api.add_resource(UserResource, "/api/user/<user_id>")
 api.add_resource(UserListResource, '/api/user')

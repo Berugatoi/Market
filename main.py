@@ -11,10 +11,15 @@ from uuid import uuid5, NAMESPACE_OID
 from forms.ProductAddForm import ProductAddForm
 from werkzeug.utils import secure_filename
 from data.product import Product
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
 
 
 
 app = Flask(__name__)
+admin = Admin(app, name="market", template_mode='bootstrap3')
+admin.add_view(ModelView(UserTable, db_sess.create_session()))
+admin.add_view(ModelView(Product, db_sess.create_session()))
 api = Api(app)
 api.add_resource(UserResource, "/api/user/<user_id>")
 api.add_resource(UserListResource, '/api/user')

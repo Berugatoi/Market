@@ -16,13 +16,19 @@
   <form action="" method="POST" onsubmit="return validateForm()">
   <table>
     <tr>
-      <td>Email:</td><td><input type="email" name="email" value={{current_user.email}}></td>
+      <td>Email:</td><td>{{email}}</td>
     </tr>
     <tr>
-      <td>Телефон:</td><td><input type="tel" name="phone" value={{current_user.phone_number}} id="phone"></td>
+      <td>Телефон:</td><td><input type="tel" name="phone" value="{{phone}}" id="phone"></td>
     </tr>
     <tr>
-      <td>Адрес:</td><td><input type="text" name="address" value={{current_user.address}}></td>
+      <td><b>Адрес:</b></td>
+    </tr>
+    <tr>
+      <td>Город:</td><td><input type="text" name="city" value="{{city}}" class="place"></td>
+    </tr>
+    <tr>
+      <td>Страна:</td><td><input type="text" name="country" value="{{country}}" class="place"></td>
     </tr>
   </table>
   <input type="submit" value="Сохранить изменения" style="display:block; margin-left:auto; margin-right:auto; margin-top:1vw;">

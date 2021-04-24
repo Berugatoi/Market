@@ -5,32 +5,126 @@
 {% endblock %}
 
 {% block body %}
-<div class="sticky">
-  <h1>IbraShop</h1></div>
-<ul class="headbar">
-  <li><a href="/">Домой</a></li>
-  <li><a href="/signup">Новый аккаунт</a></li>
-  {% if current_user.is_authenticated %}
-    <li><a href="/logout">Выйти</a></li>
-  {% else %}
-    <li><a href="/login">Войти</a></li>
-  {% endif %}
-</ul>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">IbraShop</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">Домой</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/signup">Регистрация</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/login">Вход</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
 {% if current_user.is_authenticated %}
-  <p><br/>{{ current_user.name }}</p>
-  <div class="centerthis">
-  <p class="press"><a href="/viewprofile">Посмотреть профиль</a></p>
-  <p class="press"><a href="/editprofile">Редактировать</a></p>
-  {% if type=="Customer" %}
+<p><br/>Вы вошли как {{name}} -> {{type}}</p>
+<div class="centerthis">
+    <p class="press"><a href="/viewprofile">Посмотреть профиль</a></p>
+    <p class="press"><a href="/editprofile">Редактировать</a></p>
+    {% if type=="Customer" %}
     <p class="press"><a href="/buy">Купить</a></p>
-  {% elif type=="Seller" %}
+    {% elif type=="Seller" %}
     <p class="press"><a href="/sell">Продать</a></p>
-  {% endif %}
-  <p class="press"><a href="/changepassword">Поменять пароль</a></p>
-  </div>
+    {% endif %}
+    <p class="press"><a href="/changepassword">Поменять пароль</a></p>
+</div>
 {% else %}
-  <p><br/>Войдите в аккаунт, чтобы посмотреть</p>
+<p><br/>Войдите в аккаунт, чтобы посмотреть</p>
+<div class="container content">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="list-group">
+                <a href="#" class="list-group-item">Футболки</a>
+                <a href="#" class="list-group-item">Джинсы</a>
+                <a href="#" class="list-group-item">Брюки</a>
+                <a href="#" class="list-group-item">Платья</a>
+                <a href="#" class="list-group-item">Куртки</a>
+            </div>
+        </div>
+        <div class="col-md-8 products">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="product">
+                        <div class="product-img">
+                            <a href="#"><img src="static/img/goods1.jpg" alt=""></a>
+                        </div>
+                        <p class="product-title">
+                            <a href="#">Cream jane jeans dress</a>
+                        </p>
+                        <p class="product-desc">Signature NYX cosmetics</p>
+                        <p class="product-price">Price: €10.00</p>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="product">
+                        <div class="product-img">
+                            <a href="#"><img src="static/img/goods2.jpg" alt=""></a>
+                        </div>
+                        <p class="product-title">
+                            <a href="#">Cream sissi tunic</a>
+                        </p>
+                        <p class="product-desc">Lightweight with just a hint of sheer color, this hydrating</p>
+                        <p class="product-price">Price: €20.00</p>
+                    </div>
+                </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="product">
+                        <div class="product-img">
+                            <a href="#"><img src="static/img/goods1.jpg" alt=""></a>
+                        </div>
+                        <p class="product-title">
+                            <a href="#">Cream jane jeans dress</a>
+                        </p>
+                        <p class="product-desc">Signature NYX cosmetics</p>
+                        <p class="product-price">Price: €10.00</p>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="product">
+                        <div class="product-img">
+                            <a href="#"><img src="static/img/goods2.jpg" alt=""></a>
+                        </div>
+                        <p class="product-title">
+                            <a href="#">Cream sissi tunic</a>
+                        </p>
+                        <p class="product-desc">Lightweight with just a hint of sheer color, this hydrating</p>
+                        <p class="product-price">Price: €20.00</p>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="product">
+                        <div class="product-img">
+                            <a href="#"><img src="static/img/goods3.jpg" alt=""></a>
+                        </div>
+                        <p class="product-title">
+                            <a href="#">Big doodle shawl - blue/black</a>
+                        </p>
+                        <p class="product-desc">Lightweight with just a hint of sheer color, this hydrating Lightweight
+                            with just a hint of sheer color, this hydrating</p>
+                        <p class="product-price">Price: €9.00</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+
 {% endif %}
 </div>
 {% endblock %}

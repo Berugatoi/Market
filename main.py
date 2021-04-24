@@ -15,7 +15,11 @@ from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 
 
-class MarketView(ModelView):
+class UserView(ModelView):
+    can_create = False
+    column_exclude_list = ["hashed_password", 'birthday', 'created_date']
+    column_searchable_list = ['name']
+
 
     def is_accessible(self):
         return current_user.is_authenticated
@@ -24,10 +28,15 @@ class MarketView(ModelView):
         return redirect('/login')
 
 
+class ProductView(UserView):
+    column_exclude_list = ['photo']
+    column_sortable_list = ['price']
+
+
 app = Flask(__name__)
 admin = Admin(app, name="market", template_mode='bootstrap3')
-admin.add_view(MarketView(UserTable, db_sess.create_session()))
-admin.add_view(MarketView(Product, db_sess.create_session()))
+admin.add_view(UserView(UserTable, db_sess.create_session()))
+admin.add_view(ProductView(Product, db_sess.create_session()))
 
 api = Api(app)
 api.add_resource(UserResource, "/api/user/<user_id>")

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block body %}
+    <div class="product_card">
+        <img src="../static/img/{{product['photo']}}">
+        <p>{{product.name}}</p>
+        <p>{{product.price}}</p>
+        <p>{{product.sex}}</p>
+        <p>{{product.category_obj.name}}</p>
+        <p>{{product.sex_obj.name}}</p>
+        <p>{{product.size_obj.size}}</p>
+
+    </div>
+{% endblock %}

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, make_response, request, redirect, url_for
+from flask import Flask, render_template, jsonify, make_response, request, redirect, url_for, session
 from data import db_session as db_sess
 from init_functions import *
 from flask_restful import Api
@@ -34,6 +34,7 @@ class ProductView(UserView):
 
 
 app = Flask(__name__)
+app.config["JSON_AS_ASCII"] = False
 admin = Admin(app, name="market", template_mode='bootstrap3')
 admin.add_view(UserView(UserTable, db_sess.create_session()))
 admin.add_view(ProductView(Product, db_sess.create_session()))
@@ -76,6 +77,15 @@ def addPhoto():
     return render_template("addProduct.html", form=form)
 
 
+@app.route('/prod/<prod_id>')
+def get_product(prod_id):
+    sess = db_sess.create_session()
+    prod = sess.query(Product).filter(Product.id == prod_id).first()
+    if not prod:
+        return redirect('/')
+    return render_template('product.html', product=prod)
+
+
 @app.route('/changepassword', methods=['POST', 'GET'])
 def change_password():
     sess = db_sess.create_session()
@@ -93,7 +103,10 @@ def change_password():
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    sess = db_sess.create_session()
+    cat = sess.query(CategoryTable).all()
+    products = sess.query(Product).all()
+    return render_template('home.html', products=products, categories=cat)
 
 
 @app.route('/signup', methods=['POST', 'GET'])

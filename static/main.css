@@ -18,6 +18,7 @@ img {
 	text-align: center;
 	transition: all 0.5s ease 0s;
 	margin-bottom: 20px;
+	float: left;
 }
 .product:hover {
 	box-shadow: 0 0 16px rgba(0, 0, 0, 0.5);
@@ -43,3 +44,19 @@ img {
 	font-size: 18px;
 	font-weight: 500;
 }
+
+.favorite {
+    float: right;
+    width: 50px;
+    height: 50px;
+}
+
+
+.favorite_icon:focus['src'='empty_heart.jpg'] {
+    src='static/img/full_heart.jpg';
+}
+
+.favorite_icon:focus['src'='full_heart.jpg'] {
+    src='static/img/empty_heart.jpg';
+}
+

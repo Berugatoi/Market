@@ -2,12 +2,14 @@
 
 {% block title %}
 <title>IbraShop</title>
+<script src="http://127.0.0.1:5000/static/main.js")}}>
+</script>
 {% endblock %}
 
 {% block body %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">IbraShop</a>
+        <a class="navbar-brand" href="/">IbraShop</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -33,98 +35,36 @@
 <div class="centerthis">
     <p class="press"><a href="/viewprofile">Посмотреть профиль</a></p>
     <p class="press"><a href="/editprofile">Редактировать</a></p>
-    {% if type=="Customer" %}
-    <p class="press"><a href="/buy">Купить</a></p>
-    {% elif type=="Seller" %}
-    <p class="press"><a href="/sell">Продать</a></p>
-    {% endif %}
     <p class="press"><a href="/changepassword">Поменять пароль</a></p>
 </div>
 {% else %}
 <p><br/>Войдите в аккаунт, чтобы посмотреть</p>
-<div class="container content">
-    <div class="row">
-        <div class="col-md-4">
+{% endif %}
+<div class="col-md-4">
             <div class="list-group">
-                <a href="#" class="list-group-item">Футболки</a>
-                <a href="#" class="list-group-item">Джинсы</a>
-                <a href="#" class="list-group-item">Брюки</a>
-                <a href="#" class="list-group-item">Платья</a>
-                <a href="#" class="list-group-item">Куртки</a>
+                {% for cat in categories %}
+                    <a href="/filter/{{cat.name}}" class="list-group-item">{{cat.name}}</a>
+                {% endfor %}
             </div>
         </div>
-        <div class="col-md-8 products">
-            <div class="row">
-                <div class="col-sm-4">
+{% for prod in products %}
+                <div class="col-sm-4 {{prod.photo}}">
                     <div class="product">
+                        <div class="favorite"><img id={{prod.id}} class="favorite_icon" onclick="Switch({{prod.id}})"
+                                                   src="{{ url_for('static', filename='icons/empty_heart.jpg') }}"></button></div>
                         <div class="product-img">
-                            <a href="#"><img src="static/img/goods1.jpg" alt=""></a>
+                            <a href=""><img src={{url_for('static', filename='img/' + prod.photo)}} alt=""></a>
                         </div>
                         <p class="product-title">
-                            <a href="#">Cream jane jeans dress</a>
+                            <a href="/prod/{{prod.id}}">{{prod.name}}</a>
                         </p>
-                        <p class="product-desc">Signature NYX cosmetics</p>
-                        <p class="product-price">Price: €10.00</p>
+                        <p class="product-desc">{{prod.category_obj.name}}</p>
+                        <p class="product-price">{{prod.price}}</p>
                     </div>
                 </div>
-                <div class="col-sm-4">
-                    <div class="product">
-                        <div class="product-img">
-                            <a href="#"><img src="static/img/goods2.jpg" alt=""></a>
-                        </div>
-                        <p class="product-title">
-                            <a href="#">Cream sissi tunic</a>
-                        </p>
-                        <p class="product-desc">Lightweight with just a hint of sheer color, this hydrating</p>
-                        <p class="product-price">Price: €20.00</p>
-                    </div>
-                </div>
-            <div class="row">
-                <div class="col-sm-4">
-                    <div class="product">
-                        <div class="product-img">
-                            <a href="#"><img src="static/img/goods1.jpg" alt=""></a>
-                        </div>
-                        <p class="product-title">
-                            <a href="#">Cream jane jeans dress</a>
-                        </p>
-                        <p class="product-desc">Signature NYX cosmetics</p>
-                        <p class="product-price">Price: €10.00</p>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="product">
-                        <div class="product-img">
-                            <a href="#"><img src="static/img/goods2.jpg" alt=""></a>
-                        </div>
-                        <p class="product-title">
-                            <a href="#">Cream sissi tunic</a>
-                        </p>
-                        <p class="product-desc">Lightweight with just a hint of sheer color, this hydrating</p>
-                        <p class="product-price">Price: €20.00</p>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="product">
-                        <div class="product-img">
-                            <a href="#"><img src="static/img/goods3.jpg" alt=""></a>
-                        </div>
-                        <p class="product-title">
-                            <a href="#">Big doodle shawl - blue/black</a>
-                        </p>
-                        <p class="product-desc">Lightweight with just a hint of sheer color, this hydrating Lightweight
-                            with just a hint of sheer color, this hydrating</p>
-                        <p class="product-price">Price: €9.00</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
+{% endfor %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="bootstrap/js/bootstrap.min.js"></script>
 
-{% endif %}
 </div>
 {% endblock %}

@@ -11,10 +11,11 @@ from data.product import Product
 class ProductResource(Resource):
     def get(self, product_id):
         sess = db_sess.create_session()
-        product = sess.query(CategoryTable).filter(CategoryTable.id == product_id).all()
+        product = sess.query(Product).filter(Product.id == product_id).first()
         if not product:
             return make_response(jsonify(error='Not Found'), 404)
-        return jsonify(product=product.to_dict(only=('name', 'category', 'size', 'price', 'sex')))
+        return jsonify(product=product.to_dict(only=['name', 'price', 'sex_obj', 'category_obj',
+                                                        'size_obj']))
 
     def delete(self, product_id):
         sess = db_sess.create_session()

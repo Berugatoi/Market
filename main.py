@@ -106,8 +106,19 @@ def home():
     sess = db_sess.create_session()
     cat = sess.query(CategoryTable).all()
     products = sess.query(Product).all()
+    print(request.cookies)
     return render_template('home.html', products=products, categories=cat)
 
+
+@app.route('/favorite')
+def favorite_prod():
+    cookies = request.cookies.get('UserCookie', False)
+    products = []
+    if cookies:
+        sess = db_sess.create_session()
+        products = sess.query(Product).filter(Product.id.in_(cookies)).all()
+
+    return render_template('favorites.html', products=products)
 
 @app.route('/signup', methods=['POST', 'GET'])
 def signup():

@@ -115,6 +115,7 @@ def favorite_prod():
     cookies = request.cookies.get('UserCookie', False)
     products = []
     if cookies:
+        cookies = cookies.split(':')
         sess = db_sess.create_session()
         products = sess.query(Product).filter(Product.id.in_(cookies)).all()
 

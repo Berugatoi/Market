@@ -27,12 +27,12 @@
 {% for prod in products %}
                 <div class="col-sm-4 {{prod.photo}}">
                     <div class="product">
-                        {% if prod.id in favs %}
+                        {% if favs and prod.id in favs %}
                             <div class="favorite"><img id={{prod.id}} class="favorite_icon" onclick="Switch({{prod.id}})"
-                                                    src="{{ url_for('static', filename='icons/full_heart.jpg') }}"></div>
+                                                        src="{{ url_for('static', filename='icons/full_heart.jpg') }}"></div>
                         {% else %}
-                            <div class="favorite"><img id={{prod.id}} class="favorite_icon" onclick="Switch({{prod.id}})"
-                                                    src="{{ url_for('static', filename='icons/empty_heart.jpg') }}"></div>
+                                <div class="favorite"><img id={{prod.id}} class="favorite_icon" onclick="Switch({{prod.id}})"
+                                                        src="{{ url_for('static', filename='icons/empty_heart.jpg') }}"></div>
                         {% endif %}
                         <div class="cart"><img src='{{url_for("static", filename="icons/cart.jpg")}}' id={{prod.id}}
                                                class="cart_icon" onclick="addToCart({{prod.id}})"></div>
@@ -44,7 +44,6 @@
                         </p>
                         <p class="product-desc">{{prod.category_obj.name}}</p>
                         <p class="product-price">{{prod.price}}</p>
-                    </>
                 </div>
 {% endfor %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

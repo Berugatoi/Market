@@ -106,12 +106,15 @@ def home():
     sess = db_sess.create_session()
     cat = sess.query(CategoryTable).all()
     products = sess.query(Product).all()
-    try:
-        fav = list(map(int, request.cookies['UserCookie'].split(':')))
-    except:
-        fav = request.cookies['UserCookie'].split(':')
+    fav = request.cookies.get('UserCookie', False)
+    if fav:
+        try:
+            print('hello')
+            fav = list(map(int, request.cookies['UserCookie'].split(':')))
+        except:
+            fav = request.cookies['UserCookie'].split(':')
+    print(fav)
     return render_template('home.html', products=products, categories=cat, favs=fav)
-
 
 @app.route('/favorite')
 def favorite_prod():

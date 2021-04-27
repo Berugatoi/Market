@@ -29,6 +29,8 @@
                     <div class="product">
                         <div class="favorite"><img id={{prod.id}} class="favorite_icon" onclick="Switch({{prod.id}})"
                                                    src="{{ url_for('static', filename='icons/empty_heart.jpg') }}"></div>
+                        <div class="cart"><img src='{{url_for("static", filename="icons/cart.jpg")}}' id={{prod.id}}
+                                               class="cart_icon" onclick="addToCart({{prod.id}})"></div>
                         <div class="product-img">
                             <a href=""><img src={{url_for('static', filename='img/' + prod.photo)}} alt=""></a>
                         </div>

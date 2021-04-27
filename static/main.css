@@ -53,4 +53,23 @@ img {
 .favorite_icon {
     float: right;
 }
+.form-group {
+    background-color:#fff;
+    padding:60px;
+    -webkit-box-shadow:0 3px 50px 0 rgba(0,0,0,.1);
+    box-shadow:0 3px 50px 0 rgba(0,0,0,.1);
+    text-align:center;
+    border-radius:5px
+}
 
+.form
+{
+    background-color: #1c1c1f;
+    border-color: #dc3545;
+    color: #ffffff;
+}
+
+.black
+{
+    color: #000000
+}

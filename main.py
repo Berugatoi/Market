@@ -59,7 +59,7 @@ def addPhoto():
         dst_name = str(uuid5(NAMESPACE_OID, str(image)))
         ext = filename.split('.')[-1].lower()
         name = dst_name + "." + ext
-        with open(f'images/{name}', "wb") as m:
+        with open(f'static/img/{name}', "wb") as m:
             m.write(image)
         prod = Product(
             name=form.name.data,

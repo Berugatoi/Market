@@ -4,18 +4,20 @@
         <p>Вы ещё ничего не добавили в избранное!</p>
     {% else %}
         {% for prod in products %}
-             <div class="col-sm-4 {{prod.photo}}">
-                    <div class="product">
-                        <div class="favorite"><img id={{prod.id}} class="favorite_icon" onclick="Switch({{prod.id}})"
-                                                   src="{{ url_for('static', filename='icons/empty_heart.jpg') }}"></div>
-                        <div class="product-img">
-                            <a href=""><img src={{url_for('static', filename='img/' + prod.photo)}} alt=""></a>
+            <div class="row">
+                 <div class="col-sm-4 {{prod.photo}}">
+                        <div class="product col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                            <div class="favorite"><img id={{prod.id}} class="favorite_icon" onclick="Switch({{prod.id}})"
+                                                       src="{{ url_for('static', filename='icons/empty_heart.jpg') }}"></div>
+                            <div class="product-img">
+                                <a href=""><img src={{url_for('static', filename='img/' + prod.photo)}} alt=""></a>
+                            </div>
+                            <p class="product-title">
+                                <a href="/prod/{{prod.id}}">{{prod.name}}</a>
+                            </p>
+                            <p class="product-desc">{{prod.category_obj.name}}</p>
+                            <p class="product-price">{{prod.price}}</p>
                         </div>
-                        <p class="product-title">
-                            <a href="/prod/{{prod.id}}">{{prod.name}}</a>
-                        </p>
-                        <p class="product-desc">{{prod.category_obj.name}}</p>
-                        <p class="product-price">{{prod.price}}</p>
                     </div>
                 </div>
         {% endfor %}

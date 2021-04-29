@@ -8,7 +8,7 @@
 
 {% block body %}
 {% if current_user.is_authenticated %}
-<p><br/>Здравствуйте {{current_user.name}}</p>
+<p><br/>Вы вошли как {{name}} -> {{type}}</p>
 <div class="centerthis">
     <p class="press"><a href="/viewprofile">Посмотреть профиль</a></p>
     <p class="press"><a href="/editprofile">Редактировать</a></p>
@@ -25,25 +25,27 @@
             </div>
         </div>
 {% for prod in products %}
-                <div class="col-sm-4 {{prod.photo}}">
-                    <div class="product">
-                        {% if favs and prod.id in favs %}
-                            <div class="favorite"><img id={{prod.id}} class="favorite_icon" onclick="Switch({{prod.id}})"
-                                                        src="{{ url_for('static', filename='icons/full_heart.jpg') }}"></div>
-                        {% else %}
+                <div class="row">
+                    <div class="col-sm-4 {{prod.photo}}">
+                        <div class="product col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                            {% if favs and prod.id in favs %}
                                 <div class="favorite"><img id={{prod.id}} class="favorite_icon" onclick="Switch({{prod.id}})"
-                                                        src="{{ url_for('static', filename='icons/empty_heart.jpg') }}"></div>
-                        {% endif %}
-                        <div class="cart"><img src='{{url_for("static", filename="icons/cart.jpg")}}' id={{prod.id}}
-                                               class="cart_icon" onclick="addToCart({{prod.id}})"></div>
-                        <div class="product-img">
-                            <a href=""><img src={{url_for('static', filename='img/' + prod.photo)}} alt=""></a>
-                        </div>
-                        <p class="product-title">
-                            <a href="/prod/{{prod.id}}">{{prod.name}}</a>
-                        </p>
-                        <p class="product-desc">{{prod.category_obj.name}}</p>
-                        <p class="product-price">{{prod.price}}</p>
+                                                            src="{{ url_for('static', filename='icons/full_heart.jpg') }}"></div>
+                            {% else %}
+                                    <div class="favorite"><img id={{prod.id}} class="favorite_icon" onclick="Switch({{prod.id}})"
+                                                            src="{{ url_for('static', filename='icons/empty_heart.jpg') }}"></div>
+                            {% endif %}
+                            <div class="cart"><img src='{{url_for("static", filename="icons/cart.jpg")}}' id={{prod.id}}
+                                                   class="cart_icon" onclick="addToCart({{prod.id}})"></div>
+                            <div class="product-img">
+                                <a href=""><img src={{url_for('static', filename='img/' + prod.photo)}} alt=""></a>
+                            </div>
+                            <p class="product-title">
+                                <a href="/prod/{{prod.id}}">{{prod.name}}</a>
+                            </p>
+                            <p class="product-desc">{{prod.category_obj.name}}</p>
+                            <p class="product-price">{{prod.price}}</p>
+                    </div>
                 </div>
 {% endfor %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

@@ -14,7 +14,6 @@ from data.product import Product
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from functions import format_image
-from dotenv import load_dotenv
 import os
 
 
@@ -107,13 +106,18 @@ def change_password():
 @app.route('/')
 def home():
     sess = db_sess.create_session()
+    filter = request.cookies.get('filter')
     cat = sess.query(CategoryTable).all()
-    products = sess.query(Product).all()
+    if not filter:
+        products = sess.query(Product).all()
+    else:
+        products = sess.query(CategoryTable).filter(CategoryTable.name == filter).first()
+        products = products.products
     fav = request.cookies.get('UserCookie', False)
     if fav:
         try:
             fav = list(map(int, request.cookies['UserCookie'].split(':')))
-        except Exception as e:
+        except TypeError as e:
             fav = request.cookies['UserCookie'].split(':')
     return render_template('home.html', products=products, categories=cat, favs=fav)
 
@@ -126,7 +130,6 @@ def favorite_prod():
         cookies = cookies.split(':')
         sess = db_sess.create_session()
         products = sess.query(Product).filter(Product.id.in_(cookies)).all()
-
     return render_template('favorites.html', products=products)
 
 
@@ -134,15 +137,15 @@ def favorite_prod():
 def card():
     if request.method == 'POST':
         # Форма появляется только если корзина не пустая
-        cookies = request.cookies.get("Cart").split(':')
+        cookies = request.cookies.get("Cart")
         sess = db_sess.create_session()
-        for i in cookies:
+        for i in cookies.split(':'):
             prod = sess.query(Product).filter(Product.id == i).first()
-            print(prod.amount)
-            prod.amount -= int(request.form[f'quantity_{i}'])
-            print(prod.amount)
-            sess.merge(prod)
-            sess.commit()
+            if prod.amount > 0:
+                prod.amount -= int(request.form[f'quantity_{i}'])
+                sess.merge(prod)
+                sess.commit()
+            prod.amount = max(prod.amount, 0)
         res = make_response(redirect('/'))
         res.set_cookie('Cart', '', max_age=0)
         return res
@@ -152,8 +155,8 @@ def card():
         cookies = [i.split('-')[0] for i in cookies.split(':')]
         sess = db_sess.create_session()
         products = sess.query(Product).filter(Product.id.in_(cookies)).all()
-
     return render_template('cart.html', products=products)
+
 
 @app.route('/signup', methods=['POST', 'GET'])
 def signup():
@@ -168,7 +171,6 @@ def signup():
                 return render_template('signup.html', email_ok=False, password_ok=True)
         res = post('http://127.0.0.1:5000/api/user', data=data)
         return redirect('/login')
-
     return render_template('signup.html', email_ok=True, password_ok=True)
 
 
@@ -213,14 +215,10 @@ def viewprofile():
 @login_required
 def editprofile():
     if request.method == 'POST':
-
         sess = db_sess.create_session()
         new_data = request.form
-
         current_user.name = new_data['name']
-
         current_user.surname = new_data['surname']
-
         current_user.address = new_data['address']
         current_user.email = new_data['email']
         current_user.phone_number = new_data['phone']
@@ -228,6 +226,14 @@ def editprofile():
         sess.commit()
         return redirect('/viewprofile')
     return render_template('edit_profile.html')
+
+
+@app.route('/filter/<string:filter>')
+def filter_prods(filter):
+    sess = db_sess.create_session()
+    res = make_response(redirect('/'))
+    res.set_cookie('filter', filter)
+    return res
 
 
 @app.errorhandler(404)

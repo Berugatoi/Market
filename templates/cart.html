@@ -5,23 +5,25 @@
 {% else %}
 <form class="row" method="post">
     {% for prod in products %}
-    <div class="col-sm-4 {{prod.photo}}">
-        <div class="product col-lg-5 col-md-5 col-sm-5 col-xs-6">
-            <div class="favorite"><img id={{prod.id}} class="favorite_icon" onclick="Switch({{prod.id}})"
-                                       src="{{ url_for('static', filename='icons/empty_heart.jpg') }}"></div>
-            <div class="product-img">
-                <a href=""><img src={{url_for('static', filename='img/' + prod.photo)}} alt=""></a>
-            </div>
-            <p class="product-title">
-                <a href="/prod/{{prod.id}}">{{prod.name}}</a>
-            </p>
-            <p class="product-desc">{{prod.category_obj.name}}</p>
-            <p class="product-price">{{prod.price}}</p>
-            <div class="product-quantity">
-                <input type="number" step="1" min="1" max="{{prod.amount}}" id="num_count" name="quantity_{{prod.id}}" value="1" title="Кол-во">
+    {% if prod.amount %}
+        <div class="col-sm-4 {{prod.photo}}">
+            <div class="product col-lg-5 col-md-5 col-sm-5 col-xs-6">
+                <div class="favorite"><img id={{prod.id}} class="favorite_icon" onclick="Switch({{prod.id}})"
+                                           src="{{ url_for('static', filename='icons/empty_heart.jpg') }}"></div>
+                <div class="product-img">
+                    <a href=""><img src={{url_for('static', filename='img/' + prod.photo)}} alt=""></a>
+                </div>
+                <p class="product-title">
+                    <a href="/prod/{{prod.id}}">{{prod.name}}</a>
+                </p>
+                <p class="product-desc">{{prod.category_obj.name}}</p>
+                <p class="product-price">{{prod.price}}</p>
+                <div class="product-quantity">
+                    <input type="number" step="1" min="0" max="{{prod.amount}}" id="num_count" name="quantity_{{prod.id}}" value="1" title="Кол-во">
+                </div>
             </div>
         </div>
-    </div>
+    {% endif %}
 {% endfor %}
         <button type="submit">Сделать заказ</button>
 

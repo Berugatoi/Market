@@ -45,17 +45,25 @@ let Switch = function (prod_id) {
 
 
 
-
+// Функция для добавления элемента в корзину
 let addToCart = function(prod_id){
     let cookies = convertStringToObject(document.cookie);
     if (cookies['Cart']){
-        if (!cookies['Cart'].includes(String(prod_id))) {
-            let new_val = 'Cart=' + cookies['Cart'] + ':' + String(prod_id);
+        cookies_list = [];
+        cookies['Cart'].split(':').forEach(
+        function(item, i, arr) {
+            cookies_list.push(item.split('-')[0]);
+        }
+        )
+        if (!cookies_list.includes(String(prod_id))) {
+            let new_val = 'Cart=' + cookies['Cart'] + ':' + String(prod_id) + "-1";
+            console.log(new_val)
             document.cookie = new_val;
      }
+
 }
     else {
-        document.cookie = 'Cart=' + String(prod_id)
+        document.cookie = 'Cart=' + String(prod_id) + "-1"
     }
 }
 

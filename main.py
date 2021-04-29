@@ -118,8 +118,10 @@ def home():
         try:
             fav = list(map(int, request.cookies['UserCookie'].split(':')))
         except TypeError as e:
-            fav = request.cookies['UserCookie'].split(':')
-    return render_template('home.html', products=products, categories=cat, favs=fav)
+            pass
+    res = make_response(render_template('home.html', products=products, categories=cat, favs=fav))
+    res.set_cookie('filter', '', max_age=0)
+    return res
 
 
 @app.route('/favorite')

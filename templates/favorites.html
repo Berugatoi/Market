@@ -3,10 +3,10 @@
     {% if not products %}
         <p>Вы ещё ничего не добавили в избранное!</p>
     {% else %}
+    <div class="row">
         {% for prod in products %}
-            <div class="row">
                  <div class="col-sm-4 {{prod.photo}}">
-                        <div class="product col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                        <div class="product col-lg-5 col-md-5 col-sm-5 col-xs-6">
                             <div class="favorite"><img id={{prod.id}} class="favorite_icon" onclick="Switch({{prod.id}})"
                                                        src="{{ url_for('static', filename='icons/empty_heart.jpg') }}"></div>
                             <div class="product-img">
@@ -19,7 +19,8 @@
                             <p class="product-price">{{prod.price}}</p>
                         </div>
                     </div>
-                </div>
+
         {% endfor %}
+    </div>
     {% endif %}
 {% endblock %}

@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% block body %}
 {% if not products %}
-<p>Вы ещё ничего не добавили в избранное!</p>
+<p>Пустая корзина так и ждёт, чтобы вы потратили свои деньги на хайповый шмот!</p>
 {% else %}
-<div class="row">
+<form class="row" method="post">
     {% for prod in products %}
     <div class="col-sm-4 {{prod.photo}}">
         <div class="product col-lg-5 col-md-5 col-sm-5 col-xs-6">
@@ -18,11 +18,13 @@
             <p class="product-desc">{{prod.category_obj.name}}</p>
             <p class="product-price">{{prod.price}}</p>
             <div class="product-quantity">
-                <input type="number" step="1" min="1" max="{{prod.amount}}" id="num_count" name="quantity" value="1" title="Кол-во">
+                <input type="number" step="1" min="1" max="{{prod.amount}}" id="num_count" name="quantity_{{prod.id}}" value="1" title="Кол-во">
             </div>
         </div>
     </div>
 {% endfor %}
-    <div>
+        <button type="submit">Сделать заказ</button>
+
+</form>
 {% endif %}
 {% endblock %}

@@ -130,8 +130,22 @@ def favorite_prod():
     return render_template('favorites.html', products=products)
 
 
-@app.route('/cart')
+@app.route('/cart', methods=['POST', 'GET'])
 def card():
+    if request.method == 'POST':
+        # Форма появляется только если корзина не пустая
+        cookies = request.cookies.get("Cart").split(':')
+        sess = db_sess.create_session()
+        for i in cookies:
+            prod = sess.query(Product).filter(Product.id == i).first()
+            print(prod.amount)
+            prod.amount -= int(request.form[f'quantity_{i}'])
+            print(prod.amount)
+            sess.merge(prod)
+            sess.commit()
+        res = make_response(redirect('/'))
+        res.set_cookie('Cart', '', max_age=0)
+        return res
     cookies = request.cookies.get('Cart', False)
     products = []
     if cookies:

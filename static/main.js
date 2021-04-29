@@ -56,14 +56,14 @@ let addToCart = function(prod_id){
         }
         )
         if (!cookies_list.includes(String(prod_id))) {
-            let new_val = 'Cart=' + cookies['Cart'] + ':' + String(prod_id) + "-1";
+            let new_val = 'Cart=' + cookies['Cart'] + ':' + String(prod_id);
             console.log(new_val)
             document.cookie = new_val;
      }
 
 }
     else {
-        document.cookie = 'Cart=' + String(prod_id) + "-1"
+        document.cookie = 'Cart=' + String(prod_id)
     }
 }
 

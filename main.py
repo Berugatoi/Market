@@ -176,19 +176,32 @@ def login():
     return render_template('login.html')
 
 
-
 @app.route('/viewprofile')
 @login_required
 def viewprofile():
-    sess = db_sess.create_session()
     if not current_user.is_authenticated:
         return make_response(jsonify({'error': 'Not found'}), 404)
     return render_template('view_profile.html', user=current_user)
 
 
-@app.route('/editprofile')
+@app.route('/editprofile', methods=['POST', 'GET'])
 @login_required
 def editprofile():
+    if request.method == 'POST':
+
+        sess = db_sess.create_session()
+        new_data = request.form
+
+        current_user.name = new_data['name']
+
+        current_user.surname = new_data['surname']
+
+        current_user.address = new_data['address']
+        current_user.email = new_data['email']
+        current_user.phone_number = new_data['phone']
+        sess.merge(current_user)
+        sess.commit()
+        return redirect('/viewprofile')
     return render_template('edit_profile.html')
 
 

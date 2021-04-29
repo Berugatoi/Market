@@ -14,16 +14,15 @@
     <p><a href="/">Домой</a> > <a href="/viewprofile">Посмотреть профиль</a> > <a href="">Профиль пользователя</a></p>
   </div>
   <h2>Профиль пользователя</h2>
-  {{type}} Account
   <table>
     <tr>
-      <td>Имя:</td><td>{{user.name}}</td>
+      <td>Имя:</td><td>{{current_user.name}}</td>
     </tr>
     <tr>
-      <td>Email:</td><td>{{user.email}}</td>
+      <td>Email:</td><td>{{current_user.email}}</td>
     </tr>
     <tr>
-      <td>Телефон:</td><td>{{phone}}</td>
+      <td>Телефон:</td><td>{{current_user.phone_number}}</td>
     </tr>
     {% if type=="Seller" %}
     <tr>
@@ -34,13 +33,8 @@
     </tr>
     {% endif %}
     <tr>
-      <td>Адрес:</td><td>{{city}}, {{country}}</td>
+      <td>Адрес:</td><td>{{current_user.address}}</td>
     </tr>
   </table>
-  {% if my %}
-  <p class="press"><a href="/editprofile/">Редактировать профиль</a></p>
-  {% endif %}
-  {% if not my and type!="Customer" %}
-  <p class="press"><a href="./sellerproducts">Посмотреть товар</a></p>
-  {% endif %}
+  <p class="press"><a href="/editprofile">Редактировать профиль</a></p>
 {% endblock %}

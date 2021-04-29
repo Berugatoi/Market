@@ -21,5 +21,5 @@ class ProductAddForm(FlaskForm):
     choices = [(i.id, i.size) for i in sess.query(ClothingSizeTable).all()]
     size = SelectField('size', validators=[DataRequired()], choices=choices)
     amount = IntegerField('amount', validators=[DataRequired()])
-    photo = FileField('photo', validators=[FileRequired()])
+    photo = FileField('photo')
     submit = SubmitField()

@@ -77,7 +77,6 @@ def addPhoto():
         sess = db_sess.create_session()
         sess.add(prod)
         sess.commit()
-        return redirect('/')
     return render_template("addProduct.html", form=form)
 
 

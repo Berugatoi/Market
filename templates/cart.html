@@ -18,7 +18,7 @@
             <p class="product-desc">{{prod.category_obj.name}}</p>
             <p class="product-price">{{prod.price}}</p>
             <div class="product-quantity">
-                <input type="number" step="1" min="1" max="10" id="num_count" name="quantity" value="1" title="Кол-во">
+                <input type="number" step="1" min="1" max="{{prod.amount}}" id="num_count" name="quantity" value="1" title="Кол-во">
             </div>
         </div>
     </div>

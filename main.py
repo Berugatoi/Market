@@ -130,16 +130,16 @@ def favorite_prod():
     return render_template('favorites.html', products=products)
 
 
-@app.route('/card')
+@app.route('/cart')
 def card():
-    cookies = request.cookies.get('UserCookie', False)
+    cookies = request.cookies.get('Cart', False)
     products = []
     if cookies:
-        cookies = cookies.split(':')
+        cookies = [i.split('-')[0] for i in cookies.split(':')]
         sess = db_sess.create_session()
         products = sess.query(Product).filter(Product.id.in_(cookies)).all()
 
-    return render_template('card.html', products=products)
+    return render_template('cart.html', products=products)
 
 @app.route('/signup', methods=['POST', 'GET'])
 def signup():

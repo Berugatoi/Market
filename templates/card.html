@@ -5,9 +5,8 @@
 {% else %}
 <div class="row">
     {% for prod in products %}
-
     <div class="col-sm-4 {{prod.photo}}">
-        <div class="product col-lg-4 col-md-4 col-sm-4 col-xs-6">
+        <div class="product col-lg-5 col-md-5 col-sm-5 col-xs-6">
             <div class="favorite"><img id={{prod.id}} class="favorite_icon" onclick="Switch({{prod.id}})"
                                        src="{{ url_for('static', filename='icons/empty_heart.jpg') }}"></div>
             <div class="product-img">
@@ -18,14 +17,12 @@
             </p>
             <p class="product-desc">{{prod.category_obj.name}}</p>
             <p class="product-price">{{prod.price}}</p>
-            <div class="input-group quantity_goods">
-                <input type="number" step="1" min="1" max="10" id="num_count" name="quantity" value="1" title="Qty">
-                <input type="button" value="-" id="button_minus">
-                <input type="button" value="+" id="button_plus">
+            <div class="product-quantity">
+                <input type="number" step="1" min="1" max="10" id="num_count" name="quantity" value="1" title="Кол-во">
             </div>
         </div>
     </div>
-</div>
 {% endfor %}
+    <div>
 {% endif %}
 {% endblock %}

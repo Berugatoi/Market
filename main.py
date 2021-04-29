@@ -13,6 +13,9 @@ from werkzeug.utils import secure_filename
 from data.product import Product
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
+from functions import format_image
+from dotenv import load_dotenv
+import os
 
 
 class UserView(ModelView):
@@ -61,6 +64,7 @@ def addPhoto():
         name = dst_name + "." + ext
         with open(f'static/img/{name}', "wb") as m:
             m.write(image)
+        format_image.resize_image(f'static/img/{name}')
         prod = Product(
             name=form.name.data,
             category=form.category.data,
@@ -109,12 +113,11 @@ def home():
     fav = request.cookies.get('UserCookie', False)
     if fav:
         try:
-            print('hello')
             fav = list(map(int, request.cookies['UserCookie'].split(':')))
-        except:
+        except Exception as e:
             fav = request.cookies['UserCookie'].split(':')
-    print(fav)
     return render_template('home.html', products=products, categories=cat, favs=fav)
+
 
 @app.route('/favorite')
 def favorite_prod():
